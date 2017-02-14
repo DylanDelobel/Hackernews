@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 
+const DEFAULT_QUERY = 'React';
+
+const PATH_BASE = 'https://hn.angolia.com/api/v1';
+const PATH_SEARCH = '/search';
+const PARAM_SEARCH = 'query=';
+
+let url = `${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${DEFAULT_QUERY}`;
+
 const list = [
     {
         title: 'React',
@@ -27,7 +35,7 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
             list,
             searchTerm: '',
