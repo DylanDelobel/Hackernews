@@ -44,7 +44,13 @@ class App extends Component {
         this.setSearchTopstories = this.setSearchTopstories.bind(this);
         this.fetchSearchTopstories = this.fetchSearchTopstories.bind(this);
         this.onSearchChange = this.onSearchChange.bind(this);
+        this.onSearchSubmit = this.onSearchSubmit.bind(this)
         this.onDismiss = this.onDismiss.bind(this);
+    }
+
+    onSearchSubmit() {
+        const { searchTerm } = this.state;
+        this.fetchSearchTopstories(searchTerm);
     }
 
     setSearchTopstories(result) {
@@ -52,7 +58,7 @@ class App extends Component {
     }
 
     fetchSearchTopstories(searchTerm) {
-        fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+        fetch(url)
             .then(response => response.json())
             .then(result => this.setSearchTopstories(result));
     }
@@ -68,8 +74,11 @@ class App extends Component {
 
     onDismiss(id) {
         const isNotId = item => item.objectID !== id;
-        const updatedList = this.state.list.filter(isNotId);
-        this.setState({ list: updatedList });
+        const updatedHits = this.state.result.hits.filter(isNotId);
+        this.setState({
+            result: { ...this.state.result, hits: updatedHits }
+        });
+
     }
 
     render() {
@@ -83,10 +92,18 @@ class App extends Component {
                     <Search
                         value={searchTerm}
                         onChange={this.onSearchChange}
+                        onSumbit={this.onSearchSubmit}
                     >
                         Search
                     </Search>
                 </div>
+                { result &&
+                    <Table
+                        list={result.hits}
+                        pattern={searchTerm}
+                        onDismiss={this.onDismiss}
+                    />
+                }
                 <Table
                     list={result.hits}
                     pattern={searchTerm}
