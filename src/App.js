@@ -3,7 +3,7 @@ import './App.css';
 
 const DEFAULT_QUERY = 'React';
 const DEFAULT_PAGE = 0;
-const DEFAULT_HPP = '100';
+const DEFAULT_HPP = '10';
 
 const PATH_BASE = 'https://hn.algolia.com/api/v1';
 const PATH_SEARCH = '/search';
